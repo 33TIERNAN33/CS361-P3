@@ -10,4 +10,8 @@ public class TMState {
     public void setTransition(int symbol, int nextState, int writeSymbol, char move) {
         transitions[symbol] = new TMTransition(nextState, writeSymbol, move);
     }
+
+    public TMTransition getTransitions(int symbol) {
+        return transitions[symbol];
+    }
 }
