@@ -16,6 +16,13 @@ with no spaces, followed by a newline.
 
 ## Reflection
 
+To preface this project reflection I ended up doing this project by myself. 
+I had tried to find a partner via discussion board on canvas and when that 
+didn't work I tried to email the professor to help find a partner but I sent 
+it that monday starting the thanksgiving break so I never got a response. 
+So please don't deduct too harshly from me not doing with a partner, even 
+though it is partially my fault I didn't get one, I really did try to.
+
 Overall, this project helped me connect the theoretical definition of a Turing
 machine with an actual implementation. Once I decided on a representation for
 the machine and tape, the core simulation loop was straightforward. Using a
@@ -26,9 +33,17 @@ offsets manually like I would have had to with an array.
 The most challenging parts were correctly interpreting the file format and
 getting the halting condition right. At first I confused the halting state at
 the head position rather than the current state position, which caused 
-incorrect termination behavior, and I also had to be careful about reading the final (possibly blank) input line without triggering `NullPointerException`s. Another subtle issue was remembering that the tape alphabet symbols are digits (`0..m`), not their character codes, so I had to convert characters to integer symbols and back when reading and
-printing. Debugging these issues made me pay close attention to off-by-one
-errors and how I mapped the linear transition index to `(state, symbol)` pairs.
+incorrect termination behavior, and I also had to be careful about reading the 
+final (possibly blank) input line without triggering `NullPointerException`s. 
+Another subtle issue was remembering that the tape alphabet symbols are digits 
+(`0..m`), not their character codes, which took me a while to figure out when I 
+was inserting '1' into my hashmap of the tape and tried to print the results it 
+was printing 48 which I was able to look up and resolve with proper integer parsing 
+from a character since apparently Integer.parseInt() only works on string, not char, 
+so I also had to look up the proper way to parse char to in. After that I was then 
+able to convert characters to integer symbols and back when reading and printing 
+easily. Debugging these issues made me pay close attention to off-by-one errors and 
+how I mapped the linear transition index to `(state, symbol)` pairs.
 
 To keep the code easier to debug and modify, I separated the design into small
 classes: a `TM` class to manage the machine and tape, a `TMState` class to
