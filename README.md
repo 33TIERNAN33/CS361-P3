@@ -6,34 +6,55 @@
 
 ## Overview
 
-Concisely explain what the program does. If this exceeds a couple of
-sentences, you're going too far. Generally you should be pulling this
-right from the project specification. Please don't just cut and
-paste, but paraphrase what is stated in the project specification.
+This program simulates a deterministic, total Turing machine with a bi-infinite tape.  
+The simulator reads a machine description file that specifies the number of states,
+input alphabet size, and the full transition function for all non-halting states,
+followed by an optional input string. It then executes the machine starting in
+state 0 with the head on the first input symbol, runs until the unique halting
+state is reached, and prints the contents of all visited tape cells as digits
+with no spaces, followed by a newline.
 
 ## Reflection
 
-Write a brief (2-3 paragraph) reflection describing your experience with this 
-project. Answer the following questions (but feel free to add other insights): 
-- What worked well and what was a struggle?
-- What concepts still aren't quite clear?
-- What techniques did you use to make your code easy to debug and modify?
-- What would you change about your design process?
-- If you could go back in time, what would you tell yourself about doing this project?
+Overall, this project helped me connect the theoretical definition of a Turing
+machine with an actual implementation. Once I decided on a representation for
+the machine and tape, the core simulation loop was straightforward. Using a
+sparse `HashMap` for the tape made it easy to support a bi-infinite tape and
+arbitrary head positions without worrying about resizing arrays or managing
+offsets manually like I would have had to with an array.
+
+The most challenging parts were correctly interpreting the file format and
+getting the halting condition right. At first I confused the halting state at
+the head position rather than the current state position, which caused 
+incorrect termination behavior, and I also had to be careful about reading the final (possibly blank) input line without triggering `NullPointerException`s. Another subtle issue was remembering that the tape alphabet symbols are digits (`0..m`), not their character codes, so I had to convert characters to integer symbols and back when reading and
+printing. Debugging these issues made me pay close attention to off-by-one
+errors and how I mapped the linear transition index to `(state, symbol)` pairs.
+
+To keep the code easier to debug and modify, I separated the design into small
+classes: a `TM` class to manage the machine and tape, a `TMState` class to
+store outgoing transitions, and a `TMTransition` class to hold the next-state,
+write-symbol, and movement information. This object-oriented structure made it
+clear who is responsible for what and made the simulation loop in `TMSimulator`
+much more readable. If I could go back and start over, I would prototype the
+transition parsing and tape initialization earlier, and write small tests for
+tiny machines before running the large provided files. That would have caught
+my encoding and halting mistakes sooner and saved some time.
 
 ## Compiling and Using
 
-This section should tell the user how to compile your code.  It is
-also appropriate to instruct the user how to use your code. Does your
-program require user input? If so, what does your user need to know
-about it to use it as quickly as possible?
+To compile the simulator, make sure you are in the project directory that
+contains the `tm` folder. Then run:
+
+bash
+javac tm/*.java
+
+To run the simulator run:
+java tm.TMSimulator file#.txt
+replace file# with whatever file you would want to read from that is in the correct format.
 
 ## Sources used
 
-If you used any sources outside of the lecture notes, class lab files,
-or text book you need to list them here. If you looked something up on
-stackoverflow.com and fail to cite it in this section it will be
-considered plagiarism and be dealt with accordingly. So be safe CITE!
+I gave my readme and javadocs to AI so it could make everything more understandable/neat.
 
 ----------
 This README template is using Markdown. To preview your README output,

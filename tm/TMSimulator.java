@@ -5,9 +5,30 @@ import java.io.FileReader;
 import java.io.IOException;
 
 /**
- * Javadoc comment describing this class.
+ * Entry point for the Turing machine simulator.
+ * 
+ * This class is responsible for parsing the machine description file,
+ * constructing the {@link TM} instance, initializing the input tape,
+ * and starting the simulation. It expects a single command-line
+ * argument naming the file that encodes the Turing machine and input.
+ * The program prints the contents of all visited tape cells as digits
+ * with no spaces, followed by a newline, when the machine halts.
+ *
+ * @author Tiernan Benner
  */
 public class TMSimulator {
+    /**
+     * Main entry point for the simulator.
+     * 
+     * Usage: java tm.TMSimulator inputfile.txt
+     * 
+     * The input file must contain the Turing machine description and
+     * (optionally) an input string on the last line, formatted as
+     * specified in the project description.
+     *
+     * @param args command-line arguments; expects exactly one argument,
+     *             the path to the machine description file
+     */
     public static void main(String[] args) {
         if (args.length != 1) {
             System.err.println("Usage: java tm.TMSimulator <inputfile>");
